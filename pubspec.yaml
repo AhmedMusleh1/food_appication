@@ -1,0 +1,47 @@
+name: food_application
+description: A new Flutter project.
+
+
+publish_to: "none" 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.5 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.2
+  readmore: ^2.1.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+
+flutter:
+  fonts:
+    - family: Mooli
+      fonts: 
+        - asset: assets/fonts/Mooli-Regular.ttf
+  
+  uses-material-design: true
+
+  assets:
+    - assets/images/burgers/
+    - assets/images/desserts/
+    - assets/images/fried_chicken/
+    - assets/images/fries/
+    - assets/images/home_images/
+    - assets/images/icons_images/
+    - assets/images/mexican/
+    - assets/images/pizzas/
+    - assets/images/salads/
+  
+  
