@@ -31,6 +31,11 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
   @override
   Widget build(BuildContext context) {
     int currentIndex = listOfProducts.indexOf(widget.productItem);
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    bool isMobileView = true;
+
+    screenWidth > 800 ? isMobileView = false : true;
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -66,8 +71,8 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
                 : Icons.favorite_border),
             color: Colors.deepOrange,
           ),
-          const SizedBox(
-            width: 8.0,
+          SizedBox(
+            width: screenWidth / 51.4285,
           ),
         ],
       ),
@@ -86,15 +91,16 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
                           widget.productItem.sourceImg,
                           width: double.infinity,
                           fit: BoxFit.contain,
-                          height: 250,
+                          height: screenHeight / 3.46968,
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 32,
+                    SizedBox(
+                      height: screenHeight / 27.106875,
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth / 17.14283),
                       child: Column(
                         children: [
                           Row(
@@ -129,12 +135,12 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
                                             ? _decreaseQuantity
                                             : null,
                                         icon: const Icon(Icons.remove)),
-                                    const SizedBox(
-                                      width: 4.0,
+                                    SizedBox(
+                                      width: screenWidth / 102.857,
                                     ),
                                     Text(quantity.toString()),
-                                    const SizedBox(
-                                      width: 4.0,
+                                    SizedBox(
+                                      width: screenWidth / 102.857,
                                     ),
                                     IconButton(
                                         onPressed: _increaseQuantity,
@@ -144,8 +150,8 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 32,
+                          SizedBox(
+                            height: screenHeight / 27.106875,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,7 +173,7 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
                                       " ${widget.productItem.estimatedCookingTimeInMinutes} Mins"),
                             ],
                           ),
-                          const SizedBox(height: 32.0),
+                          SizedBox(height: screenHeight / 27.106875),
                           ReadMoreText(
                             "this is ${widget.productItem.name} from  this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from ",
                             trimLines: 3,
@@ -187,16 +193,18 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 8.0,
+            SizedBox(
+              height:
+                  isMobileView ? screenHeight * 0.1 : screenHeight / 108.4275,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: 24.0, vertical: isMobileView ? 0.0 : 24.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    //flex: 1,
+                    flex: 2,
                     child: Text(
                       "\$ ${(widget.productItem.price * quantity).toStringAsFixed(2)} ",
                       style: const TextStyle(
@@ -206,15 +214,18 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
                     ),
                   ),
                   Expanded(
-                    //flex: 2,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.deepOrange,
-                            foregroundColor: Colors.white,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0))),
-                        onPressed: () {},
-                        child: const Text("Checkout")),
+                    flex: 1,
+                    child: SizedBox(
+                      height: screenHeight * 0.05,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.deepOrange,
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0))),
+                          onPressed: () {},
+                          child: const Text("Checkout")),
+                    ),
                   )
                 ],
               ),

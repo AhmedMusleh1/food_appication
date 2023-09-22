@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
-
 import 'package:flutter/material.dart';
-
 import "package:food_application/assets_factory/main_images_factory.dart";
 import "package:food_application/components/category.dart";
 import "package:food_application/components/product.dart";
@@ -26,6 +24,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final orientation = MediaQuery.of(context).orientation;
+    //debugPrint(orientation.toString());
+
+    bool isMobileView = true;
+
+    screenWidth > 800 ? isMobileView = false : true;
+
     return SafeArea(
         child: SingleChildScrollView(
       child: Padding(
@@ -87,20 +94,22 @@ class _HomePageState extends State<HomePage> {
                 )
               ],
             ),
-            const SizedBox(
-              height: 32.0,
+            SizedBox(
+              height: screenHeight / 27.106875,
             ),
             ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
               child: Image.asset(
                 MainImageFactory.homeImage1,
-                height: 200,
+                height:
+                    // using KisWeb  , Platform.isIOS || Platform.isAndroid
+                    isMobileView ? screenHeight / 4.337 : screenHeight * 0.45,
                 width: double.infinity,
                 fit: BoxFit.fill,
               ),
             ),
-            const SizedBox(
-              height: 32.0,
+            SizedBox(
+              height: screenHeight / 27.106875,
             ),
             TextField(
               decoration: InputDecoration(
@@ -116,16 +125,19 @@ class _HomePageState extends State<HomePage> {
                     borderSide: BorderSide.none,
                   )),
             ),
-            const SizedBox(
-              height: 32.0,
+            SizedBox(
+              height: screenHeight / 27.106875,
             ),
             SizedBox(
-                height: 120,
+                height: orientation == Orientation.landscape
+                    ? screenHeight * 0.3
+                    : screenHeight / 7.2285,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: categories.length,
                   itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 12.0),
+                    padding:
+                        EdgeInsetsDirectional.only(end: screenWidth / 34.285),
                     child: InkWell(
                       onTap: () {
                         setState(() {
@@ -160,14 +172,14 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Image.asset(
                                 categories[index].sourceIcon,
-                                height: 50,
-                                width: 50,
+                                height: screenHeight / 17.348,
+                                width: screenWidth / 8.228,
                                 color: selectedCategoryIndex == index
                                     ? Colors.white
                                     : null,
                               ),
-                              const SizedBox(
-                                height: 8.0,
+                              SizedBox(
+                                height: screenHeight / 108.427,
                               ),
                               Text(
                                 categories[index].name,
@@ -184,121 +196,147 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 )),
-            const SizedBox(
-              height: 32.0,
+            SizedBox(
+              height: screenHeight / 27.106875,
             ),
             GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 0.9,
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 18,
-                    crossAxisSpacing: 18),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 0.75,
+                    crossAxisCount: isMobileView
+                        ? 2
+                        : screenWidth > 1200
+                            ? 5
+                            : 4,
+                    mainAxisSpacing: screenHeight / 20,
+                    crossAxisSpacing: screenWidth / 38),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: filteredProducts.length,
-                itemBuilder: (context, index) => InkWell(
-                      onTap: () async {
-                        final backValue =
-                            await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => DetailedProductPage(
-                            productItem: filteredProducts[index],
-                          ),
-                        ));
+                itemBuilder: (context, index) =>
+                    LayoutBuilder(builder: (context, Constraints) {
+                      debugPrint(Constraints.maxWidth.toString());
 
-                        debugPrint(backValue.toString());
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(16)),
-                        child: Stack(
-                          alignment: AlignmentDirectional.center,
-                          children: [
-                            Column(
+                      return InkWell(
+                        onTap: () async {
+                          // trying to use Named Push {main page routes}
+                          //Navigator.of(context).pushNamed('/detailed-product');
+                          final backValue = await Navigator.of(context)
+                              .push(MaterialPageRoute(
+                            builder: (context) => DetailedProductPage(
+                              productItem: filteredProducts[index],
+                            ),
+                          ));
+
+                          debugPrint(backValue.toString());
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Stack(
+                              alignment: AlignmentDirectional.center,
                               children: [
-                                const SizedBox(
-                                  height: 10,
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: isMobileView
+                                          ? screenHeight / 86.742
+                                          : orientation == Orientation.landscape
+                                              ? 0
+                                              : Constraints.maxHeight * 0.5,
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(14),
+                                      child: Image.asset(
+                                        filteredProducts[index].sourceImg,
+                                        height: Constraints.maxHeight / 2,
+                                        width: screenWidth / 3.74,
+                                      ),
+                                    ),
+                                    Text(
+                                      filteredProducts[index].name,
+                                      style: TextStyle(
+                                          fontSize:
+                                              Constraints.maxHeight * 0.09,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      filteredProducts[index].category,
+                                      style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize:
+                                              Constraints.maxHeight * 0.065),
+                                    ),
+                                    SizedBox(
+                                      height: screenHeight / 289.14,
+                                    ),
+                                    Text(
+                                      "\$ ${filteredProducts[index].price.toString()}",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.deepOrange,
+                                          fontSize:
+                                              Constraints.maxHeight * 0.07),
+                                    ),
+                                  ],
                                 ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(14),
-                                  child: Image.asset(
-                                    filteredProducts[index].sourceImg,
-                                    height: 100,
-                                    width: 110,
+                                PositionedDirectional(
+                                  top: 0,
+                                  end: 0,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        filteredProducts[index] =
+                                            filteredProducts[index]
+                                                .copyWithFunc(
+                                                    isFavorite:
+                                                        !filteredProducts[index]
+                                                            .isFavorite);
+
+                                        //debugPrint(filteredProducts[index].isFavorite.toString());
+
+                                        final selectedItem = listOfProducts
+                                            .firstWhere((element) =>
+                                                element.id ==
+                                                filteredProducts[index].id);
+
+                                        final selectedItemIndex = listOfProducts
+                                            .indexOf(selectedItem);
+
+                                        //debugPrint(selectedItemIndex.toString());
+
+                                        listOfProducts[selectedItemIndex] =
+                                            filteredProducts[index];
+
+                                        // debugPrint(filteredProducts[index]
+                                        //     .isFavorite
+                                        //     .toString());
+
+                                        // debugPrint(listOfProducts[selectedItemIndex]
+                                        //     .isFavorite
+                                        //     .toString());
+                                      });
+                                    },
+                                    icon: filteredProducts[index].isFavorite
+                                        ? const Icon(Icons.favorite)
+                                        : const Icon(
+                                            Icons.favorite_border,
+                                          ),
+                                    color: Colors.deepOrange,
+                                    iconSize: isMobileView &&
+                                            orientation != Orientation.landscape
+                                        ? 25
+                                        : 40,
                                   ),
                                 ),
-                                Text(
-                                  filteredProducts[index].name,
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  filteredProducts[index].category,
-                                  style: const TextStyle(color: Colors.grey),
-                                ),
-                                const SizedBox(
-                                  height: 4.0,
-                                ),
-                                Text(
-                                  "\$ ${filteredProducts[index].price.toString()}",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.deepOrange,
-                                      fontSize: 15),
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                )
                               ],
                             ),
-                            PositionedDirectional(
-                              top: 0,
-                              end: 0,
-                              child: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    filteredProducts[index] =
-                                        filteredProducts[index].copyWithFunc(
-                                            isFavorite: !filteredProducts[index]
-                                                .isFavorite);
-
-                                    //debugPrint(filteredProducts[index].isFavorite.toString());
-
-                                    final selectedItem =
-                                        listOfProducts.firstWhere((element) =>
-                                            element.id ==
-                                            filteredProducts[index].id);
-
-                                    final selectedItemIndex =
-                                        listOfProducts.indexOf(selectedItem);
-
-                                    //debugPrint(selectedItemIndex.toString());
-
-                                    listOfProducts[selectedItemIndex] =
-                                        filteredProducts[index];
-
-                                    // debugPrint(filteredProducts[index]
-                                    //     .isFavorite
-                                    //     .toString());
-
-                                    // debugPrint(listOfProducts[selectedItemIndex]
-                                    //     .isFavorite
-                                    //     .toString());
-                                  });
-                                },
-                                icon: filteredProducts[index].isFavorite
-                                    ? const Icon(Icons.favorite)
-                                    : const Icon(
-                                        Icons.favorite_border,
-                                      ),
-                                color: Colors.deepOrange,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ))
+                      );
+                    }))
           ],
         ),
       ),

@@ -19,6 +19,14 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final orientation = MediaQuery.of(context).orientation;
+
+    bool isMobileView = true;
+
+    screenWidth > 800 ? isMobileView = false : true;
+
     return favoriteList.isEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -52,8 +60,10 @@ class _FavoritePageState extends State<FavoritePage> {
                     child: ListTile(
                       leading: Image.asset(
                         favoriteList[index].sourceImg,
-                        width: 70,
-                        height: 100,
+                        width: isMobileView
+                            ? screenWidth / 5.877542857
+                            : screenWidth * 0.1,
+                        height: screenHeight / 8.6742,
                         fit: BoxFit.fill,
                       ),
                       title: Text(
@@ -63,32 +73,39 @@ class _FavoritePageState extends State<FavoritePage> {
                       ),
                       subtitle: Text(
                           "${favoriteList[index].category} - \$ ${favoriteList[index].price} ",
-                          style: TextStyle(fontSize: 14)),
-                      trailing: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              final selectedItem = listOfProducts.firstWhere(
-                                  (element) =>
-                                      element.id == favoriteList[index].id);
+                          style: const TextStyle(fontSize: 14)),
+                      trailing: orientation == Orientation.portrait
+                          ? IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  final selectedItem =
+                                      listOfProducts.firstWhere((element) =>
+                                          element.id == favoriteList[index].id);
 
-                              final selectedItemIndex =
-                                  listOfProducts.indexOf(selectedItem);
+                                  final selectedItemIndex =
+                                      listOfProducts.indexOf(selectedItem);
 
-                              listOfProducts[selectedItemIndex].isFavorite =
-                                  false;
+                                  listOfProducts[selectedItemIndex].isFavorite =
+                                      false;
 
-                              favoriteList = listOfProducts
-                                  .where(
-                                      (element) => element.isFavorite == true)
-                                  .toList();
-                            });
-                          },
-                          icon: Icon(
-                            favoriteList[index].isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: Colors.deepOrange,
-                          )),
+                                  favoriteList = listOfProducts
+                                      .where((element) =>
+                                          element.isFavorite == true)
+                                      .toList();
+                                });
+                              },
+                              icon: Icon(
+                                favoriteList[index].isFavorite
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: Colors.deepOrange,
+                              ))
+                          : TextButton.icon(
+                              onPressed: () {},
+                              icon: const Icon(Icons.favorite_outline_rounded),
+                              label: const Text(" favorite"),
+                              style: TextButton.styleFrom(
+                                  foregroundColor: Colors.deepOrange)),
                     ),
                   ),
                 ));
