@@ -318,7 +318,7 @@ List<Product> listOfProducts = [
       estimatedCookingTimeInMinutes: 5),
   Product(
       id: 30,
-      name: "Molton Cake>",
+      name: "Molton Cake",
       category: "Desserts",
       price: 5.5,
       sourceImg: ProductFactory.moltonCake,

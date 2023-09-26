@@ -24,87 +24,121 @@ class _ProfilePageState extends State<ProfilePage> {
     screenWidth > 800 ? isMobileView = false : true;
 
     return SafeArea(
-      child: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(
-                height: screenHeight / 36.1425,
-              ),
-              CircleAvatar(
-                radius: isMobileView ? screenHeight * 0.1 : screenHeight * 0.2,
-                backgroundImage:
-                    const AssetImage(MainImageFactory.profileImage),
-              ),
-              SizedBox(
-                height: screenHeight / 36.1425,
-              ),
-              const Text(
-                "Ahmed Musleh",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Mooli"),
-              ),
-              SizedBox(
-                height: screenHeight / 144.57,
-              ),
-              const Text(
-                "Software Engineer",
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Mooli"),
-              ),
-              SizedBox(
-                height: screenHeight / 36.1425,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      child: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.ios_share,
+                      size: 25,
+                    )),
+                IconButton(
+                  icon: const Icon(
+                    Icons.settings,
+                    size: 30,
+                  ),
+                  onPressed: () {},
+                )
+              ],
+            ),
+          ),
+          SingleChildScrollView(
+            child: Center(
+              child: Column(
                 children: [
-                  const OrdersCouponsWidget(title: "Orders", value: 10),
+                  CircleAvatar(
+                    radius:
+                        isMobileView ? screenHeight * 0.1 : screenHeight * 0.2,
+                    backgroundImage:
+                        const AssetImage(MainImageFactory.profileImage),
+                  ),
                   SizedBox(
-                      height: screenHeight / 19.276,
-                      child: const VerticalDivider()),
-                  const OrdersCouponsWidget(title: "Coupons", value: 5),
-                ],
-              ),
-              SizedBox(
-                height: screenHeight / 108.4275,
-              ),
-              Divider(
-                indent: screenWidth / 20.5714,
-                endIndent: screenWidth / 20.5714,
-              ),
-              if (!Platform.isIOS) ...[
-                const ListTileProfilePage(
-                    leadingIcon: Icons.shopping_cart_outlined, title: "Orders"),
-                Divider(
-                  indent: screenWidth / 20.5714,
-                  endIndent: screenWidth / 20.5714,
-                ),
-                const ListTileProfilePage(
-                    leadingIcon: Icons.card_giftcard_outlined,
-                    title: "Coupons"),
-                Divider(
-                  indent: screenWidth / 20.5714,
-                  endIndent: screenWidth / 20.5714,
-                ),
-              ] else
-                CupertinoListSection(
-                  children: const [
-                    ListTileProfilePage(
+                    height: screenHeight / 36.1425,
+                  ),
+                  const Text(
+                    "Ahmed Musleh",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Mooli"),
+                  ),
+                  SizedBox(
+                    height: screenHeight / 144.57,
+                  ),
+                  const Text(
+                    "Software Engineer",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black54,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Mooli"),
+                  ),
+                  SizedBox(
+                    height: screenHeight / 36.1425,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const OrdersCouponsWidget(title: "Orders", value: 10),
+                      SizedBox(
+                          height: screenHeight / 19.276,
+                          child: const VerticalDivider()),
+                      const OrdersCouponsWidget(title: "Coupons", value: 5),
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenHeight / 108.4275,
+                  ),
+                  Divider(
+                    indent: screenWidth / 20.5714,
+                    endIndent: screenWidth / 20.5714,
+                  ),
+                  if (!Platform.isIOS) ...[
+                    const ListTileProfilePage(
                         leadingIcon: Icons.shopping_cart_outlined,
                         title: "Orders"),
-                    ListTileProfilePage(
+                    Divider(
+                      indent: screenWidth / 20.5714,
+                      endIndent: screenWidth / 20.5714,
+                    ),
+                    const ListTileProfilePage(
                         leadingIcon: Icons.card_giftcard_outlined,
                         title: "Coupons"),
-                  ],
-                )
-            ],
+                    Divider(
+                      indent: screenWidth / 20.5714,
+                      endIndent: screenWidth / 20.5714,
+                    ),
+                    const ListTileProfilePage(
+                        leadingIcon: Icons.people_outline_outlined,
+                        title: "Groups"),
+                    Divider(
+                      indent: screenWidth / 20.5714,
+                      endIndent: screenWidth / 20.5714,
+                    ),
+                  ] else
+                    CupertinoListSection(
+                      children: const [
+                        ListTileProfilePage(
+                            leadingIcon: Icons.shopping_cart_outlined,
+                            title: "Orders"),
+                        ListTileProfilePage(
+                            leadingIcon: Icons.wallet_giftcard_rounded,
+                            title: "Coupons"),
+                        ListTileProfilePage(
+                            leadingIcon: Icons.people_outline_outlined,
+                            title: "Communities"),
+                      ],
+                    ),
+                ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

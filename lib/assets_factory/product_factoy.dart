@@ -1,15 +1,15 @@
 class ProductFactory {
   // [Burger] images initialization
-  static const String baconBurger = "assets/images/burgers/bacon_burger.jpg";
+  static const String baconBurger = "assets/images/burgers/bacon_burger.jpeg";
   static const String chickenBurger =
-      "assets/images/burgers/chicken_burger.jpg";
+      "assets/images/burgers/chicken_burger.png";
   static const String classicBurger =
       "assets/images/burgers/classic_burger.jpg";
   static const String onionBurger =
       "assets/images/burgers/fried_onion_burger.jpg";
   static const String kidsBurger = "assets/images/burgers/kids_burger.jpg";
   static const String mashromBurger =
-      "assets/images/burgers/mashrom_burger.jpg";
+      "assets/images/burgers/mashrom_burger.jpeg";
   static const String veganBurger = "assets/images/burgers/vegan_burger.jpg";
 
   // [desserts] images initialization

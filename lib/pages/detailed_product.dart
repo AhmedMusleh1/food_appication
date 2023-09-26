@@ -175,7 +175,7 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
                           ),
                           SizedBox(height: screenHeight / 27.106875),
                           ReadMoreText(
-                            "this is ${widget.productItem.name} from  this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from ",
+                            "this is ${widget.productItem.name} from ${widget.productItem.category} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from this is ${widget.productItem.name} from ",
                             trimLines: 3,
                             lessStyle: const TextStyle(color: Colors.red),
                             moreStyle: const TextStyle(color: Colors.red),
@@ -199,7 +199,7 @@ class _DetailedProductPageState extends State<DetailedProductPage> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: 24.0, vertical: isMobileView ? 0.0 : 24.0),
+                  horizontal: 24.0, vertical: isMobileView ? 10.0 : 24.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
